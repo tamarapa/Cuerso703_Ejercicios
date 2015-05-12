@@ -58,15 +58,7 @@ public class MainProperties {
 				
 				break;
 		}
-		/*
-		 Set<String> prop = properties.stringPropertyNames();  
-		 System.out.println("" + prop);
-		 System.out.println("" + prop.size());
-		 for (int i = 0; i < prop.size(); i++) 
-		 {
-			 
-		 }
-		 */
+		
 		if (idioma!="NO")
 		{
 			String cuento = null;
