@@ -70,6 +70,7 @@ public class ListaPersonas {
 		boolean encontrado = false;
 		Persona persona = null;
 		int i = 0;
+		//TODO mejor while que do while
 		do
 		{
 			if (this.array_personas[i].getEdad()==edad)
@@ -125,6 +126,7 @@ public class ListaPersonas {
 		//recojo de propiedades el archivo donde esta la serialización
 		Properties properties = new Properties();
 		
+		
 		try {
 			properties.load(new FileInputStream("serializa.properties"));
 		} catch (FileNotFoundException e) {
@@ -138,7 +140,7 @@ public class ListaPersonas {
 		//leo el objeto		
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ficheroDestino));
-			this.equals((ListaPersonas)ois.readObject());
+			//this = (ListaPersonas)ois.readObject();
 			ois.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -152,6 +154,7 @@ public class ListaPersonas {
 	
 	public void insertarPersona (Persona p) throws InsertarPersonaException
 	{
+		//TODO para evitar duplicdor utilizar el método de buscar persona
 		if (!estaLlena())
 		{
 			int i = 0;
