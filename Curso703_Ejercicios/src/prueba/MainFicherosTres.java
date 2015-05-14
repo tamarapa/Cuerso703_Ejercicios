@@ -75,8 +75,8 @@ public class MainFicherosTres {
 				int i = 0;
 				while ((linea = br.readLine())!=null)
 				{
-					//String lineaProcesada = procesarLinea(linea);
-					String lineaProcesada = procesarLineaExprReg(linea);
+					String lineaProcesada = procesarLinea(linea);
+					//String lineaProcesada = procesarLineaExprReg(linea);
 					if (lineaProcesada!="")
 					{
 						emails =emails + lineaProcesada;
@@ -104,7 +104,23 @@ public class MainFicherosTres {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		//long tpo1 = 0;
+		//long tpo2 = 0;
+		//tpo1 = System.currentTimeMillis();
+		Runtime runtime = Runtime.getRuntime();
+		long memo1 = runtime.freeMemory();
 		mostrarArray(ficheroToArrayOrdenado("fichero.txt"));
+		//tpo2 = System.currentTimeMillis();
+		//System.out.println(tpo2-tpo1);
+		//Runtime runtime = System.getRuntime();
+		long memo2 = runtime.freeMemory();
+		runtime.gc(); //solicitamos su ejecución!
+		long memo3 = runtime.freeMemory();
+		System.out.println("MEMORIA LIBRE ANTES... "+memo1);
+		System.out.println("MEMORIA LIBRE DESPUÉS... "+memo2);
+		System.out.println("MEMORIA DIF: "+(memo1-memo2));
+		System.out.println("MEMORIA LIBRE DESPUÉS DE GC... "+memo3);
+		System.out.println("MEMORIA LIBERADA: "+(memo3-memo2));
 	}
 
 }
