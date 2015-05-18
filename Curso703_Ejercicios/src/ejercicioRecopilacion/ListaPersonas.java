@@ -15,7 +15,7 @@ public class ListaPersonas {
 	
 	public static final int CAPACIDAD = 10;
 	
-	private Persona[] array_personas;
+	public static Persona[] array_personas;
 	
 	private int totalPersonas;
 	
@@ -43,22 +43,23 @@ public class ListaPersonas {
 	{
 		//TODO BUSCAR PERSONA POR NOMBRE Y DEVOLVERLA
 		//SI NO ESTÁ, DEVOLVER NULO
-		boolean encontrado = false;
 		Persona persona = null;
-		int i = 0;
-		do
+		if (estaVacia()== false)
 		{
-			if (this.array_personas[i].getNombre().equals(nombre))
+			boolean encontrado = false;
+			int i = 0;
+			while ((encontrado!= true)&&(i < this.array_personas.length))
 			{
-				encontrado = true;
+				if (this.array_personas[i]!=null)
+				{
+					if (this.array_personas[i].getNombre()==nombre)
+					{
+						encontrado = true;
+						persona = this.array_personas[i];
+					}
+				}
+				i++;
 			}
-			i++;
-		}
-		while ((encontrado!= true)&&(i < this.array_personas.length));
-		
-		if (encontrado)
-		{
-			persona = this.array_personas[i];
 		}
 		return persona;
 	}
@@ -70,8 +71,7 @@ public class ListaPersonas {
 		boolean encontrado = false;
 		Persona persona = null;
 		int i = 0;
-		//TODO mejor while que do while
-		do
+		while ((encontrado!= true)&&i < this.array_personas.length)
 		{
 			if (this.array_personas[i].getEdad()==edad)
 			{
@@ -80,7 +80,6 @@ public class ListaPersonas {
 			}
 			i++;
 		}
-		while ((encontrado!= true)&&i < this.array_personas.length);
 		return persona;
 	}
 	
@@ -123,10 +122,8 @@ public class ListaPersonas {
 	
 	public ListaPersonas deserializar()
 	{
-		//recojo de propiedades el archivo donde esta la serialización
 		Properties properties = new Properties();
-		
-		
+		ListaPersonas listaNueva = null;
 		try {
 			properties.load(new FileInputStream("serializa.properties"));
 		} catch (FileNotFoundException e) {
@@ -140,38 +137,50 @@ public class ListaPersonas {
 		//leo el objeto		
 		try {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ficheroDestino));
-			//this = (ListaPersonas)ois.readObject();
+			listaNueva = (ListaPersonas)ois.readObject();
 			ois.close();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}		
-		return this;
+		return listaNueva;
 	}
 	
 	public void insertarPersona (Persona p) throws InsertarPersonaException
 	{
 		//TODO para evitar duplicdor utilizar el método de buscar persona
-		if (!estaLlena())
+		System.out.println("Buscando a "+ p.getNombre()+ " -> " + buscarPersona(p.getNombre()));
+		if (buscarPersona(p.getNombre())==null)
 		{
-			int i = 0;
-			boolean salir = false;
-			do {
-				if ((this.array_personas[i]==null)&&!(this.array_personas[i].getNombre().equals(p.getNombre()))&&!(this.array_personas[i].getEdad()==p.getEdad()))
+			System.out.println(p.getNombre() + " NO encontrado");
+			if (!estaLlena())
+			{
+				System.out.println("Insertando a "+p.getNombre());
+				int i = 0;
+				boolean insertado = false;
+				do
 				{
-					array_personas[i] = p;
-					salir = true;
-				}
-				
-			} while ((salir=false)&&(i<this.array_personas.length));
-			this.totalPersonas++;
+					if (array_personas[i]==null)
+					{
+						array_personas[i] = p;
+						insertado = true;
+					}
+					i++;
+				}while ((insertado == false)&&(this.array_personas[i]==null)&&(i<this.array_personas.length));
+				this.totalPersonas++;
+			}
+			else
+			{
+				System.out.println("La lista esta llena, "+p.getNombre() + " no se ha podido insertar");
+				throw new InsertarPersonaException();
+			}
 		}
 		else
 		{
-			throw new InsertarPersonaException();
+			System.out.println(p.getNombre() + " ya existe");
 		}
 	}
 	
@@ -187,11 +196,51 @@ public class ListaPersonas {
 	
 	public void mostrar()
 	{
-		//TODO MOSTRAR LA LISTA DE PERSONAS
-		// pista: ayudarse del método toString de persona
 		for (int i = 0; i < this.array_personas.length; i++) {
-			array_personas[i].toString();
+			if (this.array_personas[i]!=null)
+			{
+				this.array_personas[i].toString();
+			}
 		}
 	}
 
+	//métodos nuevos
+	
+	public boolean estaVacia()
+	{
+		return this.totalPersonas==0;
+	}
+	
+	public void eliminarPersona(Persona p)
+	{
+		System.out.println("Eliminando a "+p.getNombre());
+		if (!estaVacia())
+		{
+			if (buscarPersona(p.getNombre())!=null)
+			{
+				System.out.println(p.getNombre() + " existe en el array");
+				int i = 0;
+				boolean borrado = false;
+				do {
+					//if (this.array_personas[i].getNombre().equals(p.getNombre()))
+					if (this.array_personas[i].getNombre()==p.getNombre())
+					{
+						this.array_personas[i] = null;
+						borrado = true;
+					}
+					i++;
+				} while (!(borrado)&&(i<this.array_personas.length));
+			}
+			else
+			{
+				System.out.println(p.getNombre() + " NO existe en el array");
+			}
+		}
+	}
+	
+	/*
+	public ListaPersonas combinarListas(ListaPersonas l1, ListaPersonas l2)
+	{
+	}
+	*/
 }
