@@ -1,5 +1,6 @@
 package ejercicioRecopilacion;
 
+import prueba.Persona;
 import ejercicioRecopilacion.exceptions.NotaException;
 
 public class Alumno extends Persona{

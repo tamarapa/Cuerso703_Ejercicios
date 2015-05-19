@@ -61,4 +61,9 @@ public class Alumno extends Persona{
 		this.notaConLetras = this.notasPalabras();
 	}
 
+
+	public Alumno() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

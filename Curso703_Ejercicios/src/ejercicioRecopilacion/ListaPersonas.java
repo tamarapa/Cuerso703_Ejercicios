@@ -238,9 +238,12 @@ public class ListaPersonas {
 		}
 	}
 	
-	/*
 	public ListaPersonas combinarListas(ListaPersonas l1, ListaPersonas l2)
 	{
+		int tamanio = l1.numeroPersonas() + l2.numeroPersonas();
+		ListaPersonas listaCombinada = new ListaPersonas();
+		
+		return listaCombinada;
 	}
-	*/
+
 }

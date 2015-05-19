@@ -48,14 +48,14 @@ public class Persona implements Serializable{
 	public boolean esMayorDeEdad (){
 		return (this.edad>=MAYOR_EDAD);
 	}
-	/*
+	
 	public String toString() {
 		// TODO Auto-generated method stub
 		String estado = null;
 		estado = this.nombre + "|" +this.edad;
 		return estado;
 	}
-	*/
+	
 	/**
 	 * 
 	 * 
