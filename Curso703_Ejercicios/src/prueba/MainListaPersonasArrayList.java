@@ -1,12 +1,15 @@
 package prueba;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 
 public class MainListaPersonasArrayList  {
@@ -17,7 +20,7 @@ public class MainListaPersonasArrayList  {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Persona p1 = new Persona("Pepe",32);
-		Persona p2 = new Persona("Juan",21);
+		Persona p2 = new Persona("Juan",56);
 		/*
 		ArrayList<Persona> al = new ArrayList<Persona>();
 		
@@ -53,10 +56,11 @@ public class MainListaPersonasArrayList  {
 		m.remove("2");
 		System.out.println(m);
 		*/
-		Alumno a1 = new Alumno("pepe", (byte) 32, 10);
-		Alumno a2 = new Alumno("juan", (byte) 24, 2);
-		Alumno a3 = new Alumno("ana", (byte) 30, 8);
 		
+		Persona a1 = new Alumno("pepe", (byte) 32, 10);
+		Persona a2 = new Alumno("juan", (byte) 24, 2);
+		Persona a3 = new Alumno("ana", (byte) 24, 8);
+		/*
 		Map<String,Persona> m2 = new LinkedHashMap<String,Persona>();
 		m2.put("2", p2);
 		m2.put("5", p1);
@@ -64,11 +68,38 @@ public class MainListaPersonasArrayList  {
 		System.out.println("LinkedHashMap-> "+m2);
 		
 		Map<Integer,Alumno> m3 = new TreeMap<Integer,Alumno>();
-		m3.put(a1.getNota(), a1);
-		m3.put(a2.getNota(), a2);
-		m3.put(a3.getNota(), a3);
+		
+		m3.put(((Alumno)a1).getNota(), a1);
+		m3.put(((Alumno)a2).getNota(), a2);
+		m3.put(((Alumno)a3).getNota(), a3);
+		
 		System.out.println("TreeMap-> "+m3);
-	
+		*/
+		/*
+		System.out.println("p1.edad = :"+p1.getEdad());
+		System.out.println("p2.edad = :"+p2.getEdad());
+		System.out.println(p1.compareTo(p2));
+		
+		Set<Persona> s = new TreeSet<Persona>();
+		s.add(a1);
+		s.add(a2);
+		s.add(a3);
+		System.out.println(s);
+		*/
+		ArrayList<Persona> al = new ArrayList<Persona>();
+		OrdenarPorNombre opn = new OrdenarPorNombre();
+		OrdenarPorEdad ope = new OrdenarPorEdad();
+		
+		al.add(p1);
+		al.add(p2);
+		
+		Collections.sort(al,opn);
+		System.out.println("Lista ordenadarrrr por nombreeeer: "+al);
+		
+		Collections.sort(al,ope);
+		System.out.println("Lista ordenadarrrr por edad: "+al);
+		
+		
 	}
 
 }

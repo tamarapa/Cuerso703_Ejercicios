@@ -44,7 +44,7 @@ public class Alumno extends Persona{
 	
 	public String toString(){
 		String estado = null;
-		estado = "NOMBRE: "+this.getNombre()+" / EDAD: "+this.getEdad()+" / NOTA: "+this.getNota()+" / NOTA CON LETRA: "+getNotaConLetras();
+		estado = "\nNOMBRE: "+this.getNombre()+" / EDAD: "+this.getEdad()+" / NOTA: "+this.getNota()+" / NOTA CON LETRA: "+getNotaConLetras();
 		return estado;
 	}
 

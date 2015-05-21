@@ -2,7 +2,7 @@ package prueba;
 
 import java.io.Serializable;
 
-public class Persona implements Serializable{
+public class Persona implements Serializable, Comparable<Persona>{
 	private String nombre;
 	private int edad;
 	static final int MAYOR_EDAD = 18;
@@ -119,6 +119,28 @@ public class Persona implements Serializable{
 	public static void TRES_sumaEdad(Persona p, int annos)
 	{
 		p.setEdad(p.getEdad() + annos);
+	}
+
+	@Override
+	public int compareTo(Persona p) {
+		// TODO Auto-generated method stub
+		int comp = 0;
+		if (this.edad==p.getEdad())
+		{
+			comp = 0;
+		}
+		else
+		{
+			if (this.edad>p.getEdad())
+			{
+				comp = 1;
+			}
+			else
+			{
+				comp = -1;
+			}
+		}
+		return comp;
 	}
 	
 }

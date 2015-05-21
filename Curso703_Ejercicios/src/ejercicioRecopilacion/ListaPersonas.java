@@ -8,10 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import prueba.Persona;
 import ejercicioRecopilacion.exceptions.InsertarPersonaException;
 
 public class ListaPersonas {
+	private final static Logger log = Logger.getLogger("logTami");
 	
 	public static final int CAPACIDAD = 10;
 	
@@ -31,6 +34,7 @@ public class ListaPersonas {
 		//INICIALIZAR EL ESTADO DEL OBJETO Y SUS ATRIBUTOS
 		this.array_personas = new Persona[CAPACIDAD];
 		this.totalPersonas = 0;
+		log.info("lista creada...");
 	}
 	
 	public Persona[] getListaPersonas ()
@@ -41,8 +45,6 @@ public class ListaPersonas {
 	
 	public Persona buscarPersona (String nombre)
 	{
-		//TODO BUSCAR PERSONA POR NOMBRE Y DEVOLVERLA
-		//SI NO ESTÁ, DEVOLVER NULO
 		Persona persona = null;
 		if (estaVacia()== false)
 		{
@@ -54,6 +56,7 @@ public class ListaPersonas {
 				{
 					if (this.array_personas[i].getNombre()==nombre)
 					{
+						log.info(nombre + " encontrado...");
 						encontrado = true;
 						persona = this.array_personas[i];
 					}
