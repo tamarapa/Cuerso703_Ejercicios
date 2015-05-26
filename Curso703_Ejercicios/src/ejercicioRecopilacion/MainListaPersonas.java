@@ -1,16 +1,18 @@
 package ejercicioRecopilacion;
+import org.apache.log4j.Logger;
+
 import ejercicioRecopilacion.exceptions.InsertarPersonaException;
 import prueba.Persona;
 
 public class MainListaPersonas {
-
+	private final static Logger log = Logger.getLogger("logTami");
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ListaPersonas lp = new ListaPersonas();
-		
+		log.info("empezando...");
 		Persona p = new Persona("Pepe",35);
 		try {
 			lp.insertarPersona(p);
