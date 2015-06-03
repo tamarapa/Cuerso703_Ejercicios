@@ -13,9 +13,10 @@ public class EmpleadoDAO {
 		ResultSet rset = null;
 		Statement stmt = null;		
 		Connection conn = null;
-		conn = Conexion.obtenerConexion(conn);
-		stmt = Conexion.obtenerStatement(conn, stmt);
+		
 		try {
+			conn = Conexion.obtenerConexion();
+			stmt = Conexion.obtenerStatement(conn, stmt);
 			rset = stmt.executeQuery(InstruccionesSQL.consultaSaldo());
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block

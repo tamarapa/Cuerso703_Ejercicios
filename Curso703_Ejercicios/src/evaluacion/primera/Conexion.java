@@ -1,48 +1,40 @@
-package jdbc;
+package evaluacion.primera;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Savepoint;
 import java.sql.Statement;
 
 public class Conexion {
+	private static Connection conn;
+	private static Conexion conexion = new Conexion();
 	
-	private static Conexion conn = new Conexion();
-	
-	private Conexion()
+	private Conexion () 
 	{
-		conn.setAutoCommit(false);
-		Savepoint sp;
-		sp = conn.setSavepoint();
 		
-		try 
-		{
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "HR", "YAKO");
-		} 
-		catch (ClassNotFoundException | SQLException e) 
-		{
-			e.printStackTrace();
-			conn.rollback(sp);
-		}
-	}
-	
-	public static Connection obtenerConexion() throws SQLException
-	{		
-		return conn;
-	}
-	
-	public static Statement obtenerStatement(Connection conn, Statement stmt)
-	{
 		try {
-			stmt = conn.createStatement();
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			this.conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "HR", "YAKO");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return stmt;
+					
+	}
+	
+	public static Connection obtenerConexion ()
+	{
+		try {
+			conexion.conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "HR", "YAKO");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return conexion.conn;
 	}
 	
 	public static void liberarRecursos(Connection conn, Statement stmt, ResultSet rset)

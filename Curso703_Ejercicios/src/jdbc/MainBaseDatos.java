@@ -11,7 +11,8 @@ public class MainBaseDatos {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-			
+		
+		//
 		List<EmpleadoDTO> al_e = EmpleadoDAO.recuperarTodos();	
 		System.out.println(al_e.toString());   
 
