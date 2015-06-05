@@ -1,10 +1,10 @@
 package evaluacion.primera;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +26,6 @@ public class RegionDAO {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		//System.out.println(rset.toString());
-		
-		//hacer métodos para todas las opciones del ejercicio
-		//crear otro método para meter ese recordset en un arraylist
-		/**
-		 * desde aqui
-		 */
 		ArrayList<RegionDTO> lista_regiones = new ArrayList<RegionDTO>();
 		
 		RegionDTO objeto_region = null;
@@ -51,11 +44,9 @@ public class RegionDAO {
 		}
 			
 		return lista_regiones;
-		/**
-		 * hasta aqui
-		 */
 		
 	}
+	
 	public static List<RegionDTO> obtenerRegionPorId (String id) throws SQLException
 	{
 		ResultSet rset = null;
@@ -90,10 +81,13 @@ public class RegionDAO {
 		return lista_regiones;		
 	}
 
-	public static void insertarRegion(String nombreRegion, int posicion) 
+	public static void insertarRegion(String nombreRegion, int posicion) throws SQLException 
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
+		conn.setAutoCommit(false);
+		Savepoint sp;
+		sp = conn.setSavepoint();
 		try {
 			conn = Conexion.obtenerConexion();
 			posicion++;
@@ -105,6 +99,7 @@ public class RegionDAO {
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
+			conn.rollback(sp);
 		}
 		finally{
 			Conexion.liberarRecursos(conn, ps);
