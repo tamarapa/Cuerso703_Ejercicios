@@ -93,19 +93,21 @@ public class RegionDAO {
 	public static void insertarRegion(String nombreRegion, int posicion) 
 	{
 		Connection conn = null;
+		PreparedStatement ps = null;
 		try {
 			conn = Conexion.obtenerConexion();
 			posicion++;
 			
-		    PreparedStatement ps = conn.prepareStatement(InstruccionesSQL.INSERTAR_REGION_PS);
+		    ps = conn.prepareStatement(InstruccionesSQL.INSERTAR_REGION_PS);
 		    ps.setInt(1,posicion);
 		    ps.setString(2,nombreRegion);
-		    ps.execute();
-		    ps.close();
-		    conn.close();						
+		    ps.execute();					
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
+		}
+		finally{
+			Conexion.liberarRecursos(conn, ps);
 		}
 	}
 }
