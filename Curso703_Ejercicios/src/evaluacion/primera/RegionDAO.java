@@ -85,11 +85,13 @@ public class RegionDAO {
 	{
 		Connection conn = null;
 		PreparedStatement ps = null;
-		conn.setAutoCommit(false);
-		Savepoint sp;
-		sp = conn.setSavepoint();
+		//conn.setAutoCommit(false);
+		//Savepoint sp;
+		//sp = conn.setSavepoint();
+				
 		try {
 			conn = Conexion.obtenerConexion();
+						
 			posicion++;
 			
 		    ps = conn.prepareStatement(InstruccionesSQL.INSERTAR_REGION_PS);
@@ -99,7 +101,7 @@ public class RegionDAO {
 		} catch (SQLException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
-			conn.rollback(sp);
+			//conn.rollback(sp);
 		}
 		finally{
 			Conexion.liberarRecursos(conn, ps);

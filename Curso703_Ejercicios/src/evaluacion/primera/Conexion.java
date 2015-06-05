@@ -1,5 +1,8 @@
 package evaluacion.primera;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.Properties;
 
 public class Conexion {
 	private static Connection conn;
@@ -17,11 +21,21 @@ public class Conexion {
 		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			this.conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "HR", "YAKO");
+			Properties properties = new Properties();
+			properties.load(new FileInputStream("conexion.properties"));
+			String cadenaConexion;
+			cadenaConexion = "jdbc:oracle:thin:@ " + properties.getProperty("server")+ ":" + properties.getProperty("port") + ":" +properties.getProperty("db");
+			this.conn = DriverManager.getConnection(cadenaConexion, properties.getProperty("user"), properties.getProperty("pass"));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
